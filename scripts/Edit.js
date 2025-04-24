@@ -41,7 +41,7 @@ function renderMainComponents(displayElement){
         html += `
                 <div class="rendered-main">
                     <button class="render-main-button main-button-${object.id}" data-main-id = ${object.id}>${componentName}</button>
-                    <button class="main-edit-button edit-button" data-main-id = ${object.id}>Edit</button>
+                    <button class="main-edit-button edit-button" data-main-id = ${object.id}>✏️</button>
                     <div class="details-main details-main-${object.id} details" ></div>
                 </div>
         `;
@@ -62,7 +62,7 @@ function renderSubComponents(mainId,subArray){
         html += `
             <div class="rendered-sub">
                 <button class="render-sub-button sub-button-${object.id}" data-sub-id = ${object.id}>${componentName}</button>
-                <button class="sub-edit-button edit-button" data-sub-id = ${object.id}>Edit</button>
+                <button class="sub-edit-button edit-button" data-sub-id = ${object.id}>✏️</button>
                 <div class="details-sub details-sub-${object.id} details" ></div>
             </div>
         `;
