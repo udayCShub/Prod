@@ -1,0 +1,55 @@
+body{
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.update-tag{
+  border: solid white;
+  background: linear-gradient(to right, green,orange);  
+  padding:8px;        
+  text-align: center;
+  font-size: 3rem;
+  color : white;   
+}
+
+.addDiv{
+    border:solid;
+    padding:15px 10px;
+    margin-bottom: 10px;
+    display: grid;
+    gap:8px;
+}
+
+select, input,label{
+  font-size: 3rem;
+  font-weight: 600;
+  min-width: 300px;
+  margin: 12px 8px;
+  margin-left: 0px;
+  padding: 10px;
+}
+label{
+  font-weight: 800;
+}
+
+button{
+  display: inline-block;
+  padding: 7px 18px;
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  background-color: green;
+  border: none;
+    border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.add-op-type{
+    border:solid;
+    padding:15px 10px;
+    margin-bottom: 10px;
+    display: grid;
+    gap:8px;
+}
