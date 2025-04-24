@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Home</title>
+   <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/Edit.css">
+</head>
+<body>
+   <div>
+    <!----NavOptions Add EDIT CLEAR---->
+<nav class="navbar">
+  <ul>
+    <li><a>HOME</a></li>
+    <li><a href="Add.html">ADD</a></li>
+    <li><a href="Edit.html">EDIT</a></li>
+  </ul>   
+</nav>
+<!--------------End---------------->
+  
+ <h2 class="update-tag-home">Update Below :</h2>
+    
+     <div class="edit-selection-div">
+        <div align= "center">
+            <label>Select Gt :</label>
+            <select class="edit-gt-select">
+                <option>Select GT</option>
+            </select>
+        </div>
+        <button class="initial-edit-button">Update</button>
+    </div>
+    <hr><hr>
+     
+    <input type = "date" class= "hidden-date-input">
+ 
+    
+  <div class="render-selected">  
+  </div>
+    
+    
+    <div class="warning-popUp">
+      <div class="warning-content">
+        <p class="warning-matter">Are You Sure?</p>
+        <button class="warning-yes-button">Yes</button>
+        <button class="warning-no-button">No</button>
+      </div>
+    </div>
+     
+     <div class="wait-popUp">
+       <div class="wait-popUp-innerDiv">
+        <div class="spinner"></div>
+       </div>
+     </div>
+     
+    
+  <script type="module" src="scripts/Edit.js"></script>
+</body>
+</html>
