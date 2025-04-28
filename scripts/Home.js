@@ -46,6 +46,8 @@ function subDropDown(mainArray, mainComponentId) {
 document.querySelector(".update-sub-select").addEventListener("change", async ()=> {
     const subSelectionElement = document.querySelector(".update-sub-select");
     updateDataAttribute(subSelectionElement);
+    document.querySelector('.viewIn-selection').innerHTML = "";
+    document.querySelector('.js-renderOp').innerHTML = "";
 });
 
 document.querySelector('.update-view-button').onclick = async ()=>{
