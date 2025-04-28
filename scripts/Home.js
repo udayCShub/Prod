@@ -6,6 +6,7 @@ gtDropDown('gt-select-inHome');
 document.querySelector('.gt-select-inHome').onchange = async ()=>{
     let gtOptionSelected = document.querySelector('.gt-select-inHome').value;
     mainDropDown (gtOptionSelected, 'update-main-select');
+    document.querySelector('.viewIn-selection').innerHTML = "";
     document.querySelector('.js-renderOp').innerHTML = "";
 }
 
@@ -19,7 +20,9 @@ document.querySelector(".update-main-select").addEventListener("change", async (
     const mainComponentId = mainSelectionElement.dataset.componentId;
     
     subDropDown(mainArray,mainComponentId);
-})
+    document.querySelector('.viewIn-selection').innerHTML = "";
+    document.querySelector('.js-renderOp').innerHTML = "";
+});
 /*----------------------End--------------------------*/
 
 function subDropDown(mainArray, mainComponentId) {
