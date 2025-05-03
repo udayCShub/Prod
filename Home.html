@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/Home.css">
+</head>
+<body>  
+
+<!----NavOptions Add EDIT CLEAR---->
+<nav class="navbar">
+  <ul>
+    <li><a>HOME</a></li>
+    <li><a href="Add.html">ADD</a></li>
+    <li><a href="Edit.html">EDIT</a></li>
+  </ul>   
+</nav>
+<!--------------End---------------->
+    
+<!--Update Page-->
+  <h2 class="update-tag">Update Below :</h2>
+  <div class="update-selection-mainDiv">
+    <div class="update-selection">
+        <!--GT Selection--> 
+            <label>GT : </label>
+            <select class="gt-select-inHome">
+              <option>Main</option>
+            </select>
+      
+        <!--Main Selection-->
+          <label>Main :</label>
+           <select class="update-main-select" onchange="updateDataAttribute(this)">
+              <option>select Main</option>
+           </select>
+  
+          <!--Sub Selectiom-->
+            <label>Sub :</label>
+            <select class="update-sub-select" onchange="updateDataAttribute(this)">
+              <option>Select Sub</option>
+            </select>
+      </div>
+    <div align = "center"><button class="update-view-button">View</button></div>
+  </div>
+  <hr><hr>
+      
+  <div class="viewIn-selection">
+  </div>
+    
+  <div class="opView js-renderOp">
+  </div> 
+  
+   <div class="warning-popUp">
+      <div class="warning-content">
+        <p class="warning-matter">Are You Sure?</p>
+        <button class="warning-yes-button">Yes</button>
+        <button class="warning-no-button">No</button>
+      </div>
+    </div>
+  
+  <div class="wait-popUp">
+       <div class="wait-popUp-innerDiv">
+        <div class="spinner"></div>
+       </div>
+  </div>
+   <input type="date" class="hidden-date-input" style="visibility:hidden;"> 
+  
+  <script type="module" src="scripts/Home.js"></script>
+</body>
+</html>
