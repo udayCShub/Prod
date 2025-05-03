@@ -1,0 +1,131 @@
+.update-tag{
+  border: solid white;
+  background: linear-gradient(to left, blue,red);  
+  padding:8px;        
+  text-align: center;
+  font-size: 3rem;
+  color : white;    
+}
+
+.edit-selection-div{
+    border:solid;
+    padding:15px 10px;
+    margin-bottom: 10px;
+    display: grid;
+    gap:8px;
+}
+
+.edit-selection-div select, label{
+  font-size: 3rem;
+  min-width: 20rem;
+  height: 4rem;
+  margin: 20px 8px;
+  padding-left: 1.5rem;
+}
+
+.edit-selection-div label {
+  font-weight: 800;
+}
+
+.edit-selection-div button {
+    display: inline-block;
+    padding: 0.8rem 1.5em;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  button:active {
+    transform: scale(0.97);
+  }
+  
+  button:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+  }
+  
+
+
+.render-selected button, input{
+  margin-top: 30px;
+  margin-right: 20px;
+  font-size: 3rem;
+  min-width:88px;
+  padding: 18px;
+  border:none;
+  font-weight: bold;
+  color:white;
+}
+
+.render-selected input{
+  color:black;
+}
+
+.render-main-button{
+    background: #800000;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    /*background-color: #4f46e5;*/
+    width: 35rem;
+    border-radius: 20px;
+}
+
+.render-sub-button{
+    margin-left: 50px;
+    background: #5f9ea0;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    /*background-color: #0ea5e9;*/
+    width: 30rem;
+    border-radius: 20px;
+}
+
+.render-op-button{
+    margin-left: 180px;
+    background-color: #a9a9a9;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    width: 28rem;
+    border-radius: 40px;
+}
+
+.details-sub{
+    margin-left: 6rem;
+}
+.details-op{
+    margin-left: 14.5rem;
+}
+
+.details-delete-button{
+    background-color: #9F1717;
+    width: 15rem;
+}
+.details-save-button{
+    background-color: #253D2C;
+    width: 15rem;
+    margin-left: 08px;
+}
+.op-edit-button{
+    display: none;
+}
+
+.edit-input {
+  border:solid;
+}
+
+.hidden-date-input{
+    /*visibility: hidden;*/
+    height: 0px;
+    padding:0px;
+    margin:0px;
+    border:none;
+    font-size: 0px;
+}
