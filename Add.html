@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Add</title>
+    <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/Add.css">
+</head>
+<body>
+  
+  <!----NavOptions Add EDIT CLEAR---->
+  <nav class="navbar">
+  <ul>
+    <li><a href="Home.html">HOME</a></li>
+    <li><a>ADD</a></li>
+    <li><a href="Edit.html">EDIT</a></li>
+  </ul>   
+</nav>
+<!--------------End---------------->
+  
+  <h2 class="update-tag">Add Below :</h2>
+ 
+  <div class="addIn-options">
+    <button class="gt-button">GT</button>
+    <button class="mainComponent-button">Main Component</button>
+    <button class="subComponent-button" >Sub Component</button>
+    <button class="category-button" >Component Type</button>
+    <button class="assignOp-button">Assign Op to Type</button>
+  </div>
+  
+  <div class="addIn-display">
+    <button class="closing-addIn-display">X</button>
+    <div class="addInSelections">
+      <div class="addGT addIn-object">
+        <input class="add-gt-input" placeholder="type new GT no.">
+        <button class="add-gt-button">Add</button>
+      </div>
+      
+      <div class="add-main addIn-object">
+        <select class="gt-selection-forMain">
+          <option>Main</option>
+        </select>
+        <input class="new-main-input" placeholder="Component name">
+        <input class="new-mainPatt-input" placeholder="Patt Number">
+        <button class="addButton add-newMain-button">Add</button> 
+      </div>
+      
+      <div class="add-sub addIn-object">
+        <select class="gt-selection-forSub">
+          <option>Main</option>
+        </select>
+        <select class="main-select" onchange="updateDataAttribute(this)">
+          <option>Select Main</option>
+        </select>
+        <input class="new-sub-input" placeholder="Sub Name">
+        <input class="new-subPatt-input" placeholder="Patt Number">
+        <select class="sub-type-select">
+          <option>Select Sub Type</option>
+        </select>
+        <button class="addButton add-newSub-button">Add</button>
+      </div>
+     
+      <div class="add-type addIn-object">
+        <input class="new-type-input" placeholder="type name">
+        <button class="addButton add-newType-button">Add</button>
+      </div>
+      
+      <div class="assign-opToType addIn-object">
+        <select class="assign-type-select">
+          <option>Select Type</option>
+        </select>
+        <button class="assign-op-button">Assign</button>
+      </div>      
+    </div>
+  </div>
+  
+  
+  
+  <div class="assign-opToType-div">
+    <div class="assign-op-innerDiv">
+      <button class="closing-opToType-div">X</button>
+      <h2 class="type-selected-value"></h2>
+      
+      <datalist class="js-op-list" id="op-list">
+        <option>FMC</option>
+        <option>Chemical Clean</option>
+      </datalist>
+            
+      <div class="render-typeOp"></div>
+    </div>
+  </div>
+        <!---------End---------->
+  
+
+        
+    <div class="warning-popUp">
+      <div class="warning-content">
+        <p class="warning-matter">Are You Sure?</p>
+        <button class="warning-yes-button">Yes</button>
+        <button class="warning-no-button">No</button>
+      </div>
+    </div>  
+  
+  <div class="wait-popUp">
+       <div class="wait-popUp-innerDiv">
+        <div class="spinner"></div>
+       </div>
+     </div>
+  
+<script type="module" src="scripts/Add.js"></script>
+  
+</body>
+</html>
