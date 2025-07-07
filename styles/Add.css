@@ -1,6 +1,9 @@
 body{
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 1rem;
+}
+
+.nav-add-a {
+  background-color: white;
 }
 
 .update-tag{
@@ -8,79 +11,66 @@ body{
   background: linear-gradient(to right, green,orange);  
   padding:8px;        
   text-align: center;
-  font-size: 3rem;
+  font-size: 1rem;
   color : white;   
+  margin-bottom: 16px;
 }
-
-.add-label{
-  font-size: 6rem;
-  margin-bottom: 40px;
-}
-
 
 .addIn-options {
   display: grid;
-  grid-template-columns: 800px;
-  gap: 50px;
+  grid-template-columns: clamp(20vw, 80vw, 500px);
+  gap: 25px;
 }
 
 .addIn-options button {
   margin-left: 24px;
-  font-size: 5rem;
-  height: 160px;
+  font-size: 2rem;
   border-radius: 30px;
+  padding: 08px;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 .addIn-display {
-  height: 90vw;
+  position: absolute;
+  top: 70px;
+  align-self: center;
+  display: none;
+  height: 60vh;
   width: 90vw;
   margin-left: 4vw;
   background-color: white;
   border:solid;
-  position: absolute;
-  top: 200px;
-  align-self: center;
-  display: none;
 }
 
 .closing-addIn-display {
   position:absolute;
   right:0px;
   color: red;
-  font-size: 3rem;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
 }
 
 .addInSelections{
   display: grid;
   align-items: center;
 }
-.addInSelections button{
-  background-color: green;
-  width:280px;
-  color: white;
-  font-size: 4rem;
-  font-weight: 800;
-}
 
 .addIn-object{
   display: none;
-  grid-template-columns: 600px;
+  grid-template-columns: 50vw;
+  grid-auto-rows: 30px;
   row-gap: 20px;
   justify-content: center;
 }
 
-select, input,label{
-  font-size: 3rem;
-  font-weight: 600;
-  min-width: 300px;
-  margin: 12px 8px;
-  margin-left: 0px;
-  border-width: 2px;
-  padding: 10px;
-}
-label{
+.addInSelections button {
+  background-color: green;
+  width: 20vw;
+  color: white;
+  font-size: 1.2rem;
   font-weight: 800;
+  border:none;
 }
 
 /*button{
@@ -97,14 +87,15 @@ label{
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }*/
 
+/*
 .add-op-type{
     border:solid;
-    padding:15px 10px;
+    padding:8px 10px;
     margin-bottom: 10px;
     display: grid;
     gap:8px;
 }
-
+*/
 .assign-opToType-div{
   display: none;
   justify-content: center;
@@ -125,22 +116,12 @@ label{
   position:relative;
 }
 
-.closing-opToType-div{
-  position:absolute;
-  right:0px;
-  top:0px;
-  border: none;
-  font-size: 50px;
-  color:red;
-  z-index: 2;
-  background-color: transparent;
-}
-
 .type-selected-value{
   position:absolute;
-  top: -65px;
+  top: 0px;
   width: 100%;
-  height: 120px;
+  height: 40px;
+  font-weight: 800;
   background-color: yellow;
   display: flex;
   justify-content: center;
@@ -150,25 +131,72 @@ label{
 
 .render-typeOp{
   position: absolute;
-  top:100px;
+  top:30px;
   margin-left: 16px;
+  display: grid;
+  grid-auto-rows: 40px;
+  gap: 20px;
 }
 
 .rendered-op-div{
-  display: grid;
-  grid-template-columns: 500px 100px 100px;
-  column-gap: 50px;
-  grid-template-rows: 120px;
-  align-items: center;
   position:relative;
   top: 20px;
+  display: grid;
+  grid-template-columns: 75% 15% 15%;
+  column-gap: 20px;
+  align-items: center;
+}
+
+.rendered-op-div > * {
+  width: 100%;
+  height: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+}
+
+.rendered-op-input{
+  border: none;
+  border-radius: 12px;
+  background-color: maroon;
+  color: white;
+  padding-left: 16px;
+  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
+}
+
+.op-delete-button{
+  background-color: darkred;
+  font-size: 1rem;
+  color: white;
+  border:none;
+  border-radius: 08px;
+  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
+}
+
+.add-op-button{
+  background-color: green;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 08px;
+  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
+}
+
+.closing-opToType-div{
+  position:absolute;
+  right:0px;
+  top:0px;
+  border: none;
+  font-size: 1rem;
+  color:red;
+  z-index: 2;
+  background-color: transparent;
 }
 
 .op-list {
   position: absolute;
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 580px;
+  grid-template-columns: 180px;
   row-gap: 20px;
   z-index: 2;
 }
@@ -178,30 +206,7 @@ label{
   border: none;
   border-radius: 36px;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  font-size: 3.5rem;
+  font-size: 1rem;
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-.rendered-op-input{
-  border: none;
-  border-radius: 0.8rem;
-  background-color: maroon;
-  color: white;
-  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
-}
-
-.rendered-op-div button {
-  height: 80px;
-}
-.op-delete-button{
-  background-color: darkred;
-  font-size: 2rem;
-  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
-}
-
-.add-op-button{
-  background-color: green;
-  font-size: 4rem;
-  box-shadow: 8px 8px 10px 0 rgba(0, 0, 0, 0.6);
 }
