@@ -1,478 +1,334 @@
-import {gtDropDown,mainDropDown,warningPopUp,setId,updateDataAttribute, navbarMenuClick} from "./Common script.js";
+import {gtDropDown,warningPopUp,updateDataAttribute,activateHiddenDateInput,navbarMenuClick} from "./Common script.js";
 import {myFire} from "./Firebase data.js";
 
 navbarMenuClick();
-typeDropDown();
 
-//addFrom()
-/*async function addFrom(){
-   const mainArray = await myFire.getMainArray('52');
-   mainArray.forEach((mainObject)=>{
-      mainObject.subComponent.forEach((subObject)=>{
-         subObject.op.forEach((opObject)=>{
-            opObject.from = "";
-            opObject.to = opObject.date;
-         })
-      });
-   });
-   await myFire.updateGtData('52',mainArray)
-}*/
+await gtDropDown('edit-gt-select');
+let mainArray;
+let gtSelected;
 
-document.querySelectorAll('.addIn-options button').forEach((button)=>{
-   button.addEventListener('click', ()=>{
-      updateGtDropDown();
-      const buttonName = button.innerHTML;
-      document.querySelector('.addIn-display').style.display = "grid";
-      let element;
-      if(buttonName === 'GT'){
-         element = document.querySelector('.addGT');
-         element.style.display = "grid";
-      }else if(buttonName === 'Main Component'){
-         element = document.querySelector('.add-main');
-         element.style.display = "grid";
-      }else if(buttonName === 'Sub Component'){
-         element = document.querySelector('.add-sub');
-         element.style.display = "grid";
-      }else if(buttonName === 'Component Type'){
-         element = document.querySelector('.add-type');
-         element.style.display = "grid";
-      }else if(buttonName === 'Assign Op to Type'){
-         element = document.querySelector('.assign-opToType');
-         element.style.display = "grid";
-      }
-      
-      closingAddInDisplay(element)
-   });
-});
+document.querySelector('.search-input').oninput = function () {
+    
+}
 
-function closingAddInDisplay(element) {
-    document.querySelector('.closing-addIn-display').onclick = ()=>{
-       document.querySelector('.addIn-display').style.display = "none";
-       element.style.display = "none";
+
+document.querySelector('.edit-gt-select').onchange = ()=>{
+    gtSelected = "";
+    mainArray = "";
+    document.querySelector('.render-selected').innerHTML = "";
+}
+
+document.querySelector('.initial-edit-button').onclick = async ()=>{
+    const gtArray = await myFire.getGtArray();
+    gtSelected = document.querySelector('.edit-gt-select').value;
+    
+    let count=0;
+    gtArray.forEach((value)=>{
+        if(value === gtSelected){
+            count++;
+        }
+    });
+    
+    if(!count){
+        alert("Select a GT");
+        return;
+    }
+    
+    mainArray = await myFire.getMainArray(gtSelected);
+
+    const displayElement = document.querySelector('.render-selected');
+    renderMainComponents(displayElement);
+}
+
+function renderMainComponents(displayElement){
+    let html='';
+    mainArray.forEach((object)=>{
+        const componentName = object.name;
+        const patt = object.patt;
+        html += `
+                <div class="rendered-main">
+                    <button class="render-main-button main-button-${object.id} component-button" data-main-id = ${object.id}>${componentName}</button>
+                    <button class="main-edit-button pencil-button" data-main-id = ${object.id}>✏️</button>
+                    <div class="details-main details-main-${object.id} details" ></div>
+                </div>
+        `;
+        displayElement.innerHTML = html;
+    })
+    displayElement.innerHTML = html;
+    
+    const changingIn = 'main';
+    componentButtonAttributes(mainArray,changingIn);
+}
+
+/*----------------render sub components-------------*/
+function renderSubComponents(mainId,subArray){
+    let html='';
+    subArray.forEach((object)=>{
+       const componentName = object.name;
+        const patt = object.patt;
+        html += `
+            <div class="rendered-sub">
+                <button class="render-sub-button sub-button-${object.id} component-button" data-sub-id = ${object.id}>${componentName}</button>
+                <button class="sub-edit-button pencil-button pencil-button" data-sub-id = ${object.id}>✏️</button>
+                <div class="details-sub details-sub-${object.id} details" ></div>
+            </div>
+        `;
+    });
+    isToDisplay(mainId,'main',html);
+    
+    const changingIn = 'sub';
+    componentButtonAttributes(subArray,changingIn);
+}
+/*------------------------------ENd-----------------------*/
+
+
+/*----------------render op-------------*/
+function renderOp(subId,opArray){
+    let html='';
+    opArray.forEach((object)=>{
+       const opName = object.name;
+        const date = object.date;
+        html += `<div class="rendered-op">
+                        <button class="render-op-button op-button-${object.id} component-button" data-op-id = ${object.id}>${opName}</button>
+                        <button class="op-edit-button pencil-button" data-op-id = ${object.id}>Edit</button>
+                        <div class="details-op details-op-${object.id} details" ></div>
+                </div>`;
+    });
+    isToDisplay(subId,'sub',html);
+    
+    opArray.forEach((object)=>{
+        if(object.from){
+            document.querySelector(`.op-button-${object.id}`).style.backgroundColor = 'orange';
+        }
+        if(object.to){
+            document.querySelector(`.op-button-${object.id}`).style.backgroundColor = 'lightgreen';
+        }
+    });
+    
+    
+    const changingIn = 'op';
+    componentButtonAttributes(opArray,changingIn);
+}
+/*------------------------------End-----------------------*/
+
+
+/*----------------componentButtonAttributes-------------*/
+function componentButtonAttributes(myArray,changingIn){
+    if(document.title === "Home"){
+        document.querySelectorAll('.pencil-button').forEach((btns)=>{
+            btns.style.display = "none";
+        })
+    }
+    
+    document.querySelectorAll(`.${changingIn}-edit-button`).forEach((editButton)=>{
+        editButton.addEventListener('click',()=>{
+            const id = editButton.dataset[`${changingIn}Id`];
+            renderDetails(myArray,id,changingIn);
+        });
+    });
+    
+    document.querySelectorAll(`.render-${changingIn}-button`).forEach((mainButton,index)=>{
+        mainButton.addEventListener('click',()=>{
+            let index = mainButton.dataset.indexValue;
+            const id = mainButton.dataset[`${changingIn}Id`];
+            if(changingIn === 'main'){
+                const objectProperty = 'subComponent';
+                
+                let nextArray;
+                myArray.forEach((object)=>{
+                    if(object.id === id){
+                        nextArray = object[objectProperty];
+                    }
+                });
+                renderSubComponents(id,nextArray);
+            }else if(changingIn === 'sub'){
+                const objectProperty = 'op';
+                let nextArray;
+                myArray.forEach((object)=>{
+                    if(object.id === id){
+                        nextArray = object[objectProperty];
+                    }
+                });
+                renderOp(id,nextArray);
+            }else if(changingIn === 'op'){
+                const id = mainButton.dataset[`${changingIn}Id`];
+                renderDetails(myArray,id,changingIn)
+            }
+        });
+    });
+}
+/*------------------------------ENd-----------------------*/
+
+
+/*----------------render details-------------*/
+function renderDetails(myArray,id,changingIn){
+    let property2;
+    
+    if(changingIn === 'op'){
+        property2 = 'to';
+    }else{
+        property2 = 'patt';
+    }
+    
+    let input2Type = 'text';
+    
+    let value1;
+    let value2;
+    myArray.forEach((object)=>{
+        if(object.id === id){
+            value1 = object.name;
+            value2 = object[property2];
+        }
+    });
+    
+    let html = 
+        `<input class="details-input-${id}-1 edit-input"  value ="${value1}">
+        <input type= ${input2Type} class="details-input-${id}-2 details-input-2-${changingIn} edit-input"  value ="${value2}" data-id = ${id}>
+        <div>
+            <button class="details-save-button details-${changingIn}-buttons" data-id = ${id}>Save</button>
+            <button class="details-delete-button details-${changingIn}-buttons" data-id = ${id}>Delete</button>
+        </div>
+    `;
+    const goAhead = isToDisplay(id,changingIn,html);
+    
+    if(goAhead){
+        renderButtonAttributes(myArray,changingIn)
+    }
+    if(changingIn === 'op'){
+        convertToDate();
     }
 }
+/*------------------------------ENd-----------------------*/
 
 
-/*------Adding new GT----------*/
-document.querySelector('.add-gt-button').onclick = async ()=>{
-   const newGtElement = document.querySelector('.add-gt-input')
-   const newGtValue = newGtElement.value;
-   
-   if(newGtValue === ''){
-      alert('Type a GT number');
-      return;
-   }
-   
-   const gtRepeat = await gtCount(newGtValue);
-   if(gtRepeat){
-      alert('GT already added');
-      return;
-   }
-   
-   const response = await warningPopUp(`Adding GT ${newGtValue}`);
-   if(response === 'Yes'){
-      await myFire.addGt(newGtValue);
-      updateGtDropDown();
-      newGtElement.value="";
-   }
-}
-/*-------------------End--------------------*/
-
-async  function updateGtDropDown(){
-   await gtDropDown('gt-selection-forMain');
-   await gtDropDown('gt-selection-forSub');
-}
-
-
-/*------Adding new main component----------*/
-document.querySelector('.add-newMain-button').onclick= async ()=>{
-   const gtSelected = document.querySelector('.gt-selection-forMain').value;
-   const gtIn = await gtCount(gtSelected);
-   if(!gtIn){
-      alert('Select a GT');
-      return;
-   }
-   
-   const newMainInputElement = document.querySelector('.new-main-input');
-   const newMainName = newMainInputElement.value;
-   const newMainPattElement = document.querySelector('.new-mainPatt-input');
-   const newMainPatt = newMainPattElement.value;
-   if(!newMainName){
-      alert('Type a Component Name');
-      return;
-   }
-   
-   const mainArray = await myFire.getMainArray(gtSelected);
-   const mainRepeat = await mainCount(mainArray, newMainName);
-   if(mainRepeat){
-      alert('Componemt already added');
-      return;
-   }
-   
-   const response = await warningPopUp('Are You Sure');
-   if(response === 'Yes'){
-      let rNum = await setId (mainArray);
-      mainArray.push({
-         rNum,
-         id : `main-${rNum}`,
-         name: newMainName,
-         patt: newMainPatt,
-         subComponent: []
-      });
-      newMainInputElement.value='';
-      newMainPattElement.value='';
-      await myFire.updateGtData(gtSelected,mainArray)
-      alert(`${newMainName} Added in ${gtSelected}`)
-   }
-}
-/*-------------------End--------------------*/
-
-document.querySelector('.gt-selection-forSub').onchange = function (){
-   const gtSelected = this.value;
-   mainDropDown (gtSelected,'main-select');
-}
-
-/*-----------setting id to main Select------------*/
-document.querySelector(".main-select").onchange = function () {
-   updateDataAttribute(this);
-}
-/*-------------------End--------------------*/
-
-/*-----------Adding Sub component------------*/
-document.querySelector('.add-newSub-button').onclick = async ()=>{
-   const gtSelected = document.querySelector('.gt-selection-forSub').value;
-   const gtIn = await gtCount(gtSelected);
-   if(!gtIn){
-      alert('Select a GT');
-      return;
-   }
-   
-   const mainArray = await myFire.getMainArray(gtSelected);
-   const mainSelectedElement=document.querySelector('.main-select');
-   const mainComponentId = mainSelectedElement.dataset.componentId
-   const mainSelectedValue = mainSelectedElement.value;
-   
-   const mainIn = mainCount(mainArray, mainSelectedValue);
-   if(!mainIn){
-      alert('Select a Main Component');
-      return;
-   }
-   
-   let subArray;
-   mainArray.forEach((object)=>{
-      if(object.id === mainComponentId){
-         subArray = object.subComponent;
-      }
-   })
-   const newSubInputElement = document.querySelector('.new-sub-input');
-   let newSubName = newSubInputElement.value;
-   const newPattInputElement = document.querySelector('.new-subPatt-input');
-   let newPattnum = newPattInputElement.value;
-   if(!newSubName){
-      alert('Type a Sub Component Name');
-      return;
-   }
-   let subCount =0;
-   subArray.forEach((object)=>{
-      if(object.name === newSubName){
-         subCount++;
-      }
-   });
-   if(subCount){
-      alert(`${newSubName} already added in ${mainSelectedValue} of ${gtSelected}`);
-      return;
-   }
-   
-   const typeName = document.querySelector('.sub-type-select').value;
-   const typeArray = await myFire.getTypeArray();
-   const typeIn = typeCount(typeArray, typeName);
-   if(!typeIn){
-      alert("Select Type of Sub Component");
-      return;
-   }
-   
-   const response = await warningPopUp('Are You Sure');
-   if(response === 'Yes'){
-      const rNum = setId (subArray);
-      const subId = `${mainComponentId}-sub-${rNum}`;
-      let opArray = setOpType(typeName,typeArray);
-      opArray.forEach((object,index)=>{
-         let oprNum = setId (opArray);
-         let opId = `${subId}-op-${oprNum}`;
-         opArray[index].id = opId;
-         opArray[index].rNum = oprNum;
-      });
-                   
-      subArray.push({
-         rNum,
-         id : subId,
-         name: newSubName,
-         patt: newPattnum,
-         op: opArray
-      });
-      
-      newSubInputElement.value='';
-      newPattInputElement.value = '';
-      document.querySelector('.sub-type-select').value = 'Select Sub Type';
-      await myFire.updateGtData(gtSelected,mainArray)
-      alert(`${newSubName} component added to ${mainSelectedValue}`)
-   }
-}
-/*-------------------End--------------------*/
-
-async function gtCount(gtValue) {
-   const gtArray = await myFire.getGtArray();
-   let count = 0;
-   gtArray.forEach((value)=>{
-      if(value === gtValue){
-         count++;
-      }
-   });
-   return count;
-}
-
-function mainCount(mainArray, mainValue) {
-   let count = 0;
-   mainArray.forEach((object)=>{
-      if(object.name === mainValue){
-         count++;
-      }
-   });
-   return count;
-}
-
-function typeCount(typeArray, typeValue) {
-   let count = 0;
-   typeArray.forEach((object)=>{
-      if(object.type === typeValue){
-         count++;
-      }
-   });
-   return count;
-}
-/*------------ End------------------*/
-
-/*-----------adding op object to Sub------------*/
-function setOpType(typeValue,typeArray) {
-    let resultArray;
-    typeArray.filter((object,index)=>{
-       if(object.type === typeValue){
-        resultArray = object.op;
-       }    
-    });
-                
-    let addOpArray=[];
-    resultArray.forEach((value)=>{
-        addOpArray.push({
-           rNum: '',
-           id: '',
-           name: value,
-           from: '',
-           to: ''
-        });
-    })
-   return addOpArray;
-}
-/*-------------------End--------------------*/
-
-/*-----------Add Type------------*/
-document.querySelector('.add-newType-button').onclick= async ()=>{
-   const typeInputElement=document.querySelector('.new-type-input');
-   const typeInputValue = typeInputElement.value;
-   const typeArray = await myFire.getTypeArray();
-    
-   if(typeInputValue){
-      let count=0;
-      typeArray.forEach((object)=>{
-         if(object.type === typeInputValue){
-            count++;
-         }
-      });
-      
-      if(!count){
-         typeArray.push({type: typeInputValue, op:[]});
-         typeInputElement.value = '';
-         await myFire.updateTypeArray(typeArray);
-      }else{alert("Type already exists")}
-   }
-   typeDropDown();
-}
-/*-------------------End--------------------*/
-
-/*-----------Type DropDown------------*/
-async function typeDropDown(){
-    const typeArray = await myFire.getTypeArray();
-    let html = '<option>Select Sub Type</option>';
-    
-   typeArray.forEach((object)=>{
-         html += `<option>${object.type}</option>`
-    });
-                
-    document.querySelector('.sub-type-select').innerHTML=html;
-    document.querySelector('.assign-type-select').innerHTML=html;
-}
-/*-------------------End--------------------*/
-
-
-document.querySelector(".assign-op-button").onclick = async ()=>{
-   const typeSelectedValue = document.querySelector(".assign-type-select").value;
-   const typeArray = await myFire.getTypeArray();
-   
-   let typeCount = 0;
-   let opArray;
-   typeArray.forEach((object,index)=>{
-      if(object.type === typeSelectedValue){
-         typeCount++;
-         opArray = object.op;
-      }
-   });
-   if(!typeCount){
-      alert("Select a type");
-      return;
-   }
-   
-   document.querySelector(".assign-opToType-div").style.display = "flex";
-   
-   document.querySelector(".closing-opToType-div").onclick = ()=>{
-      document.querySelector(".assign-opToType-div").style.display = "none";
-   }
-   
-   document.querySelector(".type-selected-value").innerHTML = typeSelectedValue;
-   
-   renderOpTypeHtml(opArray, typeArray);
-}
-
-function renderOpTypeHtml(opArray, typeArray) {
-   const opArrayLength = opArray.length;
-   if(!opArrayLength){
-      opArray.push('');
-   }
-   
-   let html = "";
-   opArray.forEach((value, index)=>{
-      html += `
-      <div class= "rendered-op-div">
-        <input class="rendered-op-input op-input-${index}" placeholder="Type New Op" data-index = ${index} value = "${value}">
-        <button class="add-op-button" data-index = ${index}>+</button>
-        <button class="op-delete-button" data-index = ${index}>X</button>
-      </div>
-      <div class="op-list op-list-${index}">
+/*----------------isToDisplay-------------*/
+function isToDisplay (id,changingIn,html){
+    const detailsElement = document.querySelector(`.details-${changingIn}-${id}`);
+    const detailsHtml = detailsElement.innerHTML;
+  
+    const siblingElements = document.querySelectorAll(`.details-${changingIn}`);
+    if(detailsHtml === ''){
         
-      </div>
-      `;
-   });
-   
-   document.querySelector(".render-typeOp").innerHTML = html;
-   renderedOpAttributes(opArray, typeArray);
+        siblingElements.forEach((element)=>{
+            element.innerHTML = '';
+        });
+        detailsElement.innerHTML = html;
+        return true;
+    }else{
+        detailsElement.innerHTML = ''
+        changingIn = false;
+        return false;
+    }
 }
+/*------------------------------ENd-----------------------*/
 
-function renderedOpAttributes(opArray, typeArray){
-   document.querySelectorAll('.rendered-op-input').forEach(async (inputElement)=>{
-      const previousValue = inputElement.value;
-      const opListArray = await myFire.getOpArray();
 
-      inputElement.addEventListener('keydown', async (event)=>{
-         const index = inputElement.dataset.index;
-         const newName = inputElement.value;
-             
-         if(event.key === 'Enter'){
-            if(!newName){
-               alert("Type a New Op");
-               return;
+/*-----------Button Attributes to render------------*/
+function renderButtonAttributes(myArray,changingIn){    
+    /*-----------Render Save Button------------*/
+    document.querySelectorAll('.details-save-button').forEach((saveButton)=>{
+        saveButton.addEventListener('click', async ()=>{
+            const id = saveButton.dataset.id;
+            const inputElement1 = document.querySelector(`.details-input-${id}-1`);
+            const value1 = inputElement1.value;
+            const inputElement2 = document.querySelector(`.details-input-${id}-2`);
+            const value2 = inputElement2.value;
+            
+            let matchingIndex;
+            let matchingObject;
+            let selfIndex;
+            let selfObject
+            
+            let property2;
+            if(changingIn === 'op'){
+                property2 = 'date';
+            }else{
+                property2 = 'patt';
             }
-            if(newName !== previousValue){
-               const response = await warningPopUp('Are You Sure');
-                if(response === 'Yes'){
-                   opArray[index] = newName;
-                   await myFire.updateTypeArray(typeArray);
-                   
-                   addToOpList(newName);
-                }else{
-                   inputElement.value = previousValue;
+            
+            myArray.forEach((object,index)=>{
+                if(object.id !== id && object.name === value1){
+                    matchingIndex = index;
+                    matchingObject = object;
                 }
-            }
-         }
-      });
-      
-      inputElement.addEventListener('input', async ()=>{
-         const index = inputElement.dataset.index;
-         document.querySelector(`.op-list-${index}`).style.display = "grid";
-         const inputValue = inputElement.value;
-         opDropDown(opListArray,inputElement,index);
-      });
-      
-      inputElement.addEventListener('change', async ()=>{
-         const index = inputElement.dataset.index;
-         setTimeout(()=>{
-            document.querySelector(`.op-list-${index}`).style.display = "none";
-         },100);
-         
-      });
-   });
-   
-   document.querySelectorAll('.add-op-button').forEach((addOpButton)=>{
-      addOpButton.addEventListener('click', ()=>{
-         let index = addOpButton.dataset.index;
-         index++;
-         opArray.splice(index,0,"");
-         renderOpTypeHtml(opArray,typeArray);
-      });
-   });
-   
-   document.querySelectorAll('.op-delete-button').forEach((deleteOpButton)=>{
-      deleteOpButton.addEventListener('click', async ()=>{
-         const index = deleteOpButton.dataset.index;
-         
-         const response = await warningPopUp('Are You Sure');
-         if(response === 'Yes'){
-             opArray.splice(index,1);
-             await myFire.updateTypeArray(typeArray);
-             renderOpTypeHtml(opArray,typeArray);
-         }
-      });
-   });
-}
+                if(object.id === id){
+                    selfIndex = index;
+                    selfObject = object;
+                }
+            });
+            
+            if(Number(matchingIndex) >= 0){
+                const warningMatter = 'Value already exists do u want to shift the value'
+                const response = await warningPopUp(warningMatter);
+                if(response === 'Yes'){
+                    myArray.splice(selfIndex,0,matchingObject);
+                    matchingIndex++;
+                    myArray.splice(matchingIndex,1);
+                    await myFire.updateGtData(gtSelected,mainArray)
+                    renderAfterChanges(myArray,changingIn,id);
+                }
+           }else if(selfObject.name !== value1 || selfObject[property2] !== value2){
+               const response = await warningPopUp();
+                if(response === 'Yes'){
+                    selfObject.name = value1;
+                    selfObject[property2] = value2
+                    await myFire.updateGtData(gtSelected,mainArray)
+                    renderAfterChanges(myArray,changingIn,id);
+                }
+           }
+            
+        });
+    });
+    /*----------------------End--------------------------*/
 
-/*-----------Adding Op------------*/
-async function addToOpList(newOp) {
-   const opArray = await myFire.getOpArray();
-      
-   let count=0;
-   opArray.forEach((value)=>{
-      if(value === newOp){
-             count++;
-      }
-   });
-       
-   if(!count){
-      opArray.push(newOp);
-      await myFire.updateOpArray(opArray);
-      opDropDown();
-   }
-}
-/*-------------------End--------------------*/
+    document.querySelectorAll('.details-delete-button').forEach((deleteButton)=>{
+        deleteButton.addEventListener('click', async ()=>{
+            
+            const response = await warningPopUp();
+                if(response === 'Yes'){
+                    const id = deleteButton.dataset.id;
+                    let myIndex;
+                    myArray.forEach((object,index)=>{
+                        if(object.id === id){
+                            myIndex = index
+                        }
+                    }); 
+                    
+                    myArray.splice(myIndex,1);
+                    await myFire.updateGtData(gtSelected,mainArray)
+                    alert('Element deleted');
+                    renderAfterChanges(myArray,changingIn,id)
+                }
+        });
+    });
 
-/*-----------op DropDown------------*/
-async function opDropDown(opArray,inputElement,index) {
-   let inputValue = inputElement.value;
-   inputValue = inputValue.toLowerCase();
-   
-   const result = opArray.filter(value => value.toLowerCase().includes(inputValue));
-   
-   let html="";
-   result.forEach((value)=>{
-      html += `<button class="op-list-options">${value}</button>`
-   });
-   
-   document.querySelector(`.op-list-${index}`).innerHTML = html;
-   
-   document.querySelectorAll('.op-list-options').forEach((option)=>{
-      option.addEventListener('click',()=>{
-         const newValue = option.innerHTML;
-         inputElement.value = newValue;
-         inputElement.focus();
-      });
-      
-   })
 }
-/*-------------------End--------------------*/
+/*------------------------------ENd-----------------------*/
+
+function renderAfterChanges(myArray,changingIn,id){
+    const idSplitArray = id.split("-");
+    if(changingIn === 'main'){
+        const displayElement = document.querySelector('.render-selected');
+        renderMainComponents(displayElement);
+    }else if (changingIn === 'sub'){
+        const mainId = `${idSplitArray[0]}-${idSplitArray[1]}`;
+        document.querySelector(`.details-main-${mainId}`).innerHTML = '';
+        renderSubComponents(mainId,myArray)
+    }else if(changingIn === 'op'){
+        const subId = `${idSplitArray[0]}-${idSplitArray[1]}-${idSplitArray[2]}-${idSplitArray[3]}`;
+        document.querySelector(`.details-sub-${subId}`).innerHTML = '';
+        renderOp(subId,myArray)
+    }
+ }
+
+
+function convertToDate() {
+    document.querySelectorAll('.details-input-2-op').forEach((input)=>{
+        input.readOnly = true;
+        input.addEventListener('click',async ()=>{
+            const id = input.dataset.id;
+            let selectedDate = await activateHiddenDateInput(input);
+            input.value = selectedDate;
+        });
+    });
+}
