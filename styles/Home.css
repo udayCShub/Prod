@@ -1,54 +1,41 @@
-body{
-  font-size: 18px;
-}
-
-.nav-home-a {
+.nav-edit-a {
   background-color: white;
 }
 
 
 .update-tag{
   border: solid white;
-  background: linear-gradient(to left, red,yellow);  
+  background: linear-gradient(to left, blue,red);  
   padding:8px;        
   text-align: center;
   font-size: 1rem;
   color : white;    
 }
 
-.update-selection-mainDiv{
-  border: 3px solid black;
+.edit-selection-div{
+  border:solid;
+  border-weight: 800;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-.update-selection{
-  display:grid;
-  grid-template-columns:80px 180px;
-  gap:03px;
-  justify-content: center;
-  margin-left: 15px;
   padding:15px 10px;
+  margin-bottom: 10px;
 }
 
-.update-selection select, label{
+.edit-selection-div select, label{
   font-size: 1rem;
-  min-width: 3rem;
-  height: 2rem;
-  margin: 8px 8px;
-  padding-left: 6px;
-  font-weight: 900;
-  color: #007bff;
+  width: 130px;
+  height: 30px;
 }
 
-.update-selection select{
-  color: #343a40;
+.edit-selection-div label {
+  font-weight: 800;
 }
 
-.update-view-button{
-    margin-bottom: 16px;
-    padding:  06px 40px;
-    font-size: 1.2rem;
+.initial-edit-button {
+    display: inline-block;
+  margin-top:16px;
+    padding: 0.6rem 1.8em;
+    font-size: 1rem;
     font-weight: 800;
     color: #fff;
     background: linear-gradient(135deg, #4f46e5, #3b82f6);
@@ -57,135 +44,113 @@ body{
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
- }
-
-.viewIn-selection{
-  margin-left: 08px;
-  display: grid;
-  grid-template-columns: 36vw 3vw 30vw 3vw 80px;
-  align-items: center;
-  column-gap: 04px;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  button:active {
+    transform: scale(0.97);
+  }
+  
+  button:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+  }
+hr{
+  margin-bottom: -10px;
 }
 
-.arrow{
+.component-button{
+  margin-top: 16px;
+  margin-right: 20px;
   font-size: 1rem;
-  font-weight: 800;
-}
-
-.view-in-options{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 800;
-  color:white;
-  padding: 04px;
-  background-color: 	#dc3545;
+  min-width:20px;
+  padding: 12px;
   border:none;
-  border-radius: 08px;
+  font-weight: bold;
+  color:white;
 }
 
-.js-renderOp{
-  position: absolute;
-  margin-top: -32px;
-  z-index: -1;
-}
-
-.branch-div{
-  border:solid;
-  border-width: 08px;
-  height: 6rem;
-  width:10vw;
-  white-space: nowrap;
-  margin-left: 20px;
-  border-top: none;
-  border-right:none;
+.rendered-main{
   position: relative;
 }
 
-.branch-list-opDetails {
-  position: absolute;
-  top: 4.4rem;
-  left: 1rem;
+.render-main-button{
+    background: #800000;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    /*background-color: #4f46e5;*/
+    width: 240px;
+    margin-left: 16px;
+    border-radius: 20px;
 }
 
-.branch-list-opCheck{
-  display: grid;
-  grid-template-columns:8vw 60vw 12vw;
-  column-gap: 15px;
-  margin-bottom: 12px;
+.render-sub-button {
+    position:relative;
+    background: #5f9ea0;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    /*background-color: #0ea5e9;*/
+    width: 240px;
+    border-radius: 20px;
 }
 
-.op-value{
-  background-color: #a9a9a9;
+.render-op-button {
+    position:relative;
+    background-color: #a9a9a9;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    width: 200px;
+    border-radius: 40px;
+}
+
+.details{
+  position: relative;
+  left: 40px;
+}
+
+.edit-input {
+  display: block;
+  margin-top: 12px;
+  border:solid;
+  height:32px;
+  color: black;
+}
+
+.details-delete-button {
+  background-color: #9F1717;
+}
+
+.details-save-button {
+    background-color: #253D2C;
+}
+
+.details-save-button,
+.details-delete-button{
   color: white;
-  font-size: 1.2rem;
-  font-weight: 800;
-  padding: 6px 12px;
+  width: 80px;
+  height: 40px;
+  margin: 08px 01px;
   border:none;
-  border-radius: 32px;
-  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
-
-.branch-list-dates {
-  display: grid;
-  margin-left: 60px;
-  grid-template-columns:30vw 30vw;
-  column-gap: 10px;
-}
-
-
-.date-input{
-  font-size: 1rem;
-  border-radius: 08px;
-  text-align: center;
-}
-
-.branch-list-div button{
-  font-size: 1rem;
-}
-
-.add-button{
-  border: solid;
-  background-color: #a8f0c6;
-  color: white;
-  font-size: 1.4rem;
   font-weight: 800;
-}
-
-.close-newOp-button{
-  background-color: white;
-  color:red;
   font-size: 1rem;
 }
 
-.newOp-save-button {
-  background-color: green;
-  color:white;
-  font-size: 1rem;
+.pencil-button {
+  border:none;
+  transform: rotate(90deg);
 }
-/*
-.calendar-mainDiv{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: solid;
-  padding: 20px 50px;
+
+.op-edit-button{
   display: none;
-  grid-template-columns: 130px 140px 200px 90px;
-  justify-content: center;
-  align-items: center;
-  gap:20px;
 }
-.calendar-mainDiv select,button{
-  font-size: 3rem;
-  font-weight: 800;
-  padding: 20px;
+
+
+.hidden-date-input{
+    /*visibility: hidden;*/
+    height: 0px;
+    padding:0px;
+    margin:0px;
+    border:none;
+    font-size: 0px;
 }
-.calendar-mainDiv button {
-  font-size: 2rem;
-  background-color: green;
-  color:white;
-}
-*/
