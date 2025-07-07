@@ -1,5 +1,7 @@
-import {gtDropDown,mainDropDown,warningPopUp,updateDataAttribute,dateFormat,toYYYYMMDD,activateHiddenDateInput,setId} from "./Common script.js";
+import {gtDropDown,mainDropDown,warningPopUp,updateDataAttribute,activateHiddenDateInput,setId,navbarMenuClick} from "./Common script.js";
 import {myFire} from "./Firebase data.js";
+
+navbarMenuClick();
 
 gtDropDown('gt-select-inHome');
 
@@ -171,7 +173,6 @@ function setOpButtonAttributes(gtSelected,mainArray,opArray){
             
             const response = await warningPopUp();
             if(response === 'Yes'){
-                let warningMatter;
                 let changeWhat;
                 if(!checkStatus){
                     checkElement.type = "radio";
@@ -204,7 +205,6 @@ function setOpButtonAttributes(gtSelected,mainArray,opArray){
             const opId = dateInputElement.dataset.opId;
             const changeWhat = dateInputElement.dataset.changeWhat;
             const selectedDate  = await activateHiddenDateInput(dateInputElement);
-            
             const response = await warningPopUp();
             if(response === 'Yes'){
                 opArray.forEach((object)=>{
@@ -294,3 +294,12 @@ function getTodayDate(){
     const formattedDate = `${day} ${month} ${year}`;
     return formattedDate;
 }
+
+
+const popup = document.getElementById("calendar-mainDiv");
+
+document.addEventListener("click", function(event) {
+  if (!popup.contains(event.target)) {
+    popup.style.display = "none";
+  }
+});
