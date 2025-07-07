@@ -1,5 +1,16 @@
 import {myFire} from "./Firebase data.js";
 
+export function navbarMenuClick () {
+    document.querySelector(".navbar-menu-symbol").onclick = function (){
+        const menuOptionsElementStyle = document.querySelector(".menu-options").style;
+        if(menuOptionsElementStyle.display === "none" || !menuOptionsElementStyle.display){
+            menuOptionsElementStyle.display = "grid";
+        }else{
+            menuOptionsElementStyle.display = "none";
+        }
+    }
+}
+
 /*------GT drop down----------*/
 export async function gtDropDown(elementClass){
     let html = '<option>Select GT</option>';
@@ -84,14 +95,14 @@ export function updateDataAttribute(selectElement) {
 
 export function activateHiddenDateInput(dateInputElement){
     return new Promise((resolve) => {
+        const previousDate = dateToYYYYMMDD(dateInputElement.value);
         const hiddenInputElement = document.querySelector(`.hidden-date-input`);
+        hiddenInputElement.value = previousDate;
         hiddenInputElement.click();
-        hiddenInputElement.value = toYYYYMMDD(dateInputElement.value);
-        
         hiddenInputElement.addEventListener('input', function handleChange() {
             let selectedDate = hiddenInputElement.value;
-            if(selectedDate !== dateInputElement.value){
-                selectedDate = dateFormat(selectedDate);
+            if(selectedDate !== previousDate){
+                selectedDate = dateToDDMmYYYY(selectedDate);
                 hiddenInputElement.removeEventListener('input', handleChange);
                 hiddenInputElement.value ="";
             }
@@ -100,32 +111,45 @@ export function activateHiddenDateInput(dateInputElement){
     });
 }
 
-
-
-export function dateFormat(input){
-  const date = new Date(input);
-  if (isNaN(date)) return "";
-
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = date.toLocaleString('en', { month: 'short' });
-  const year = date.getFullYear();
-
-  return `${day} ${month} ${year}`;
+function dateToDDMmYYYY(date){
+    //date = '2024-05-31'
+    if(!date){
+        return "";
+    }
+    const monthArray = ['Jan', 'Feb', 'Mar', 'Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const dateStrings = date.split("-");
+    
+    let mm;
+    monthArray.forEach((month,index)=>{
+        if(index+1 === Number(dateStrings[1])){
+            mm = month;
+        }
+    });
+    date = `${dateStrings[2]} ${mm} ${dateStrings[0]}`;
+    return date;
 }
 
-export function toYYYYMMDD(input) {
-  const date = new Date(input);
-  if (isNaN(date)) return "";
-
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-
-  return `${yyyy}-${mm}-${dd}`;
+function dateToYYYYMMDD(date){
+    //date = '31 Jul 2024'
+    if(!date){
+        return "";
+    }
+    const monthArray = ['Jan', 'Feb', 'Mar', 'Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const dateStrings = date.split(" ");
+    
+    let mm;
+    monthArray.forEach((month,index)=>{
+        if(month === dateStrings[1]){
+            mm = index + 1;
+        }
+    });
+    
+    if(mm<10){
+        mm = `0${mm}`;
+    }
+    date = `${dateStrings[2]}-${mm}-${dateStrings[0]}`;
+    return date;
 }
-
-
-
 
 export function setId(myArray) {
     let rNumArray = [];
@@ -149,3 +173,30 @@ export function setId(myArray) {
     }
     return rNum;
 }
+
+
+
+
+
+/*export function dateFormat(input){
+  const date = new Date(input);
+  if (isNaN(date)) return "";
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en', { month: 'short' });
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
+
+export function toYYYYMMDD(input) {
+  const date = new Date(input);
+  if (isNaN(date)) return "";
+
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd}`;
+}
+*/
