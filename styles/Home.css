@@ -2,36 +2,41 @@ body{
   font-size: 18px;
 }
 
+.nav-home-a {
+  background-color: white;
+}
+
+
 .update-tag{
   border: solid white;
   background: linear-gradient(to left, red,yellow);  
   padding:8px;        
   text-align: center;
-  font-size: 3rem;
+  font-size: 1rem;
   color : white;    
 }
 
 .update-selection-mainDiv{
-  border: 8px solid black;
+  border: 3px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .update-selection{
   display:grid;
-  grid-template-columns:180px 380px;
-  column-gap: 20px;
-  gap:08px;
+  grid-template-columns:80px 180px;
+  gap:03px;
   justify-content: center;
   margin-left: 15px;
-  margin-bottom:12px;
   padding:15px 10px;
 }
 
 .update-selection select, label{
-  font-size: 3rem;
-  min-width: 20rem;
-  height: 4rem;
-  margin: 20px 8px;
-  padding-left: 1.5rem;
+  font-size: 1rem;
+  min-width: 3rem;
+  height: 2rem;
+  margin: 8px 8px;
+  padding-left: 6px;
   font-weight: 900;
   color: #007bff;
 }
@@ -42,8 +47,8 @@ body{
 
 .update-view-button{
     margin-bottom: 16px;
-    padding: 0.8rem 1.5em;
-    font-size: 3rem;
+    padding:  06px 40px;
+    font-size: 1.2rem;
     font-weight: 800;
     color: #fff;
     background: linear-gradient(135deg, #4f46e5, #3b82f6);
@@ -55,28 +60,23 @@ body{
  }
 
 .viewIn-selection{
+  margin-left: 08px;
   display: grid;
-  grid-template-columns: 300px 30px 300px 30px 180px;
-  column-gap: 20px;
-  grid-template-rows: 150px;
+  grid-template-columns: 36vw 3vw 30vw 3vw 80px;
+  align-items: center;
+  column-gap: 04px;
 }
 
 .arrow{
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  font-size: 60px;
+  font-size: 1rem;
   font-weight: 800;
-  color: white;
 }
 
 .view-in-options{
   display: flex;
   align-items: center;
-  margin-top: 16px;
-  display: flex;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 1rem;
   font-weight: 800;
   color:white;
   padding: 04px;
@@ -87,15 +87,15 @@ body{
 
 .js-renderOp{
   position: absolute;
-  top: 850px;
+  margin-top: -32px;
   z-index: -1;
 }
 
 .branch-div{
   border:solid;
   border-width: 08px;
-  height: 12rem;
-  width:40px;
+  height: 6rem;
+  width:10vw;
   white-space: nowrap;
   margin-left: 20px;
   border-top: none;
@@ -105,68 +105,87 @@ body{
 
 .branch-list-opDetails {
   position: absolute;
-  top: 9.7rem;
-  left: 2rem;
-  margin-bottom: 40px;
+  top: 4.4rem;
+  left: 1rem;
 }
 
 .branch-list-opCheck{
   display: grid;
-  grid-template-columns:80px 580px 120px;
-  grid-template-rows: 85px;
-  column-gap: 20px;
-  margin-bottom: 20px;
+  grid-template-columns:8vw 60vw 12vw;
+  column-gap: 15px;
+  margin-bottom: 12px;
 }
-
-
-.branch-list-dates {
-  display: grid;
-  margin-left: 140px;
-  grid-template-columns:280px 280px;
-  grid-template-rows: 60px;
-  column-gap: 20px;
-  
-}
-
 
 .op-value{
   background-color: #a9a9a9;
   color: white;
-  font-size: 3rem;
+  font-size: 1.2rem;
   font-weight: 800;
+  padding: 6px 12px;
   border:none;
-  padding-left: 16px;
   border-radius: 32px;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
+.branch-list-dates {
+  display: grid;
+  margin-left: 60px;
+  grid-template-columns:30vw 30vw;
+  column-gap: 10px;
+}
+
+
 .date-input{
-  font-size: 2.5rem;
+  font-size: 1rem;
   border-radius: 08px;
-  
   text-align: center;
 }
 
 .branch-list-div button{
-  font-size: 4rem;
+  font-size: 1rem;
 }
 
 .add-button{
   border: solid;
   background-color: #a8f0c6;
   color: white;
-  font-size: 4rem;
+  font-size: 1.4rem;
   font-weight: 800;
 }
 
 .close-newOp-button{
   background-color: white;
   color:red;
-  font-size: 2.8rem;
+  font-size: 1rem;
 }
 
 .newOp-save-button {
   background-color: green;
   color:white;
-  font-size: 2.8rem;
+  font-size: 1rem;
 }
+/*
+.calendar-mainDiv{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: solid;
+  padding: 20px 50px;
+  display: none;
+  grid-template-columns: 130px 140px 200px 90px;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+.calendar-mainDiv select,button{
+  font-size: 3rem;
+  font-weight: 800;
+  padding: 20px;
+}
+.calendar-mainDiv button {
+  font-size: 2rem;
+  background-color: green;
+  color:white;
+}
+*/
