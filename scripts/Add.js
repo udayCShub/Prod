@@ -1,7 +1,9 @@
-import {gtDropDown,mainDropDown,warningPopUp,setId,updateDataAttribute} from "./Common script.js";
+import {gtDropDown,mainDropDown,warningPopUp,setId,updateDataAttribute, navbarMenuClick} from "./Common script.js";
 import {myFire} from "./Firebase data.js";
 
-typeDropDown()
+navbarMenuClick();
+typeDropDown();
+
 //addFrom()
 /*async function addFrom(){
    const mainArray = await myFire.getMainArray('52');
