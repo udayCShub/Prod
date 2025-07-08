@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Free Web tutorials">
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="author" content="John Doe">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/Add.css">
+</head>
+<body>
+  
+  <!----NavOptions Add EDIT CLEAR---->
+  <nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="Home.html">Prod</a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+     <div class="navbar-menu">
+      <div class="navbar-menu-symbol">
+         <hr class="menu-hr">
+         <hr class="menu-hr">
+         <hr class="menu-hr">
+      </div>
+       <div class="menu-options">
+          <a class="nav-home-a" href="Home.html">Home</a>
+          <a class="nav-add-a" href="#">Add</a>
+          <a class="nav-edit-a" href="Edit.html">Edit</a>
+       </div>
+     </div>
+  </div>
+</nav>
+<!--------------End---------------->
+  
+  <h2 class="update-tag">Add Below :</h2>
+ 
+  <div class="addIn-options">
+    <button class="gt-button">GT</button>
+    <button class="mainComponent-button">Main Component</button>
+    <button class="subComponent-button" >Sub Component</button>
+    <button class="category-button" >Component Type</button>
+    <button class="assignOp-button">Assign Op to Type</button>
+  </div>
+  
+  <div class="addIn-display">
+    <button class="closing-addIn-display">X</button>
+    <div class="addInSelections">
+      <div class="addGT addIn-object">
+        <input class="add-gt-input" placeholder="type new GT no.">
+        <button class="add-gt-button">Add</button>
+      </div>
+      
+      <div class="add-main addIn-object">
+        <select class="gt-selection-forMain">
+          <option>Main</option>
+        </select>
+        <input class="new-main-input" placeholder="Component name">
+        <input class="new-mainPatt-input" placeholder="Patt Number">
+        <button class="addButton add-newMain-button">Add</button> 
+      </div>
+      
+      <div class="add-sub addIn-object">
+        <select class="gt-selection-forSub">
+          <option>Main</option>
+        </select>
+        <select class="main-select" onchange="updateDataAttribute(this)">
+          <option>Select Main</option>
+        </select>
+        <input class="new-sub-input" placeholder="Sub Name">
+        <input class="new-subPatt-input" placeholder="Patt Number">
+        <select class="sub-type-select">
+          <option>Select Sub Type</option>
+        </select>
+        <button class="addButton add-newSub-button">Add</button>
+      </div>
+     
+      <div class="add-type addIn-object">
+        <input class="new-type-input" placeholder="type name">
+        <button class="addButton add-newType-button">Add</button>
+      </div>
+      
+      <div class="assign-opToType addIn-object">
+        <select class="assign-type-select">
+          <option>Select Type</option>
+        </select>
+        <button class="assign-op-button">Assign</button>
+      </div>      
+    </div>
+  </div>
+  
+  
+  
+  <div class="assign-opToType-div">
+    <div class="assign-op-innerDiv">
+      <button class="closing-opToType-div">X</button>
+      <h2 class="type-selected-value"></h2>
+      
+            
+      <div class="render-typeOp"></div>
+    </div>
+  </div>
+        <!---------End---------->
+  
+
+        
+    <div class="warning-popUp">
+      <div class="warning-content">
+        <p class="warning-matter">Are You Sure?</p>
+        <div class="warning-yesNo-buttons">
+          <button class="warning-yes-button">Yes</button>
+          <button class="warning-no-button">No</button>
+        </div>
+      </div>
+    </div>  
+  
+  <div class="wait-popUp">
+       <div class="wait-popUp-innerDiv">
+        <div class="spinner"></div>
+       </div>
+     </div>
+  
+<script type="module" src="scripts/Add.js"></script>
+  
+</body>
+</html>
